@@ -88,7 +88,11 @@ def md_help(parser: _argparse.ArgumentParser) -> None:
     Returns:
 
     """
-    mdFile = MdUtils(file_name=os.path.splitext(parser.prog)[0], title=parser.prog)
+    if parser.prog is None:
+        logging.info("Saving as foo.md")
+        mdFile = MdUtils(file_name="foo")
+    else:
+        mdFile = MdUtils(file_name=os.path.splitext(parser.prog)[0], title=parser.prog)
 
     if parser.description:
         mdFile.new_header(level=1, title="Description")
@@ -98,7 +102,7 @@ def md_help(parser: _argparse.ArgumentParser) -> None:
         mdFile.new_header(level=1, title="Epilog")
         mdFile.new_paragraph(parser.epilog)
 
-    mdFile.new_header(level=2, title="Usage:")
+    mdFile.new_header(level=1, title="Usage:")
     mdFile.insert_code(parser.format_usage(), language="bash")
 
     used_actions = {}
@@ -137,7 +141,7 @@ def md_help(parser: _argparse.ArgumentParser) -> None:
 
         i += 1
 
-    mdFile.new_header(level=2, title="Arguments")
+    mdFile.new_header(level=1, title="Arguments")
     mdFile.new_table(
         columns=4, rows=len(options) // 4, text=options, text_align="center",
     )
@@ -153,7 +157,7 @@ def main():
     parser.add_argument(
         "-f", "--files", help="files to convert", required=True, nargs="+",
     )
-    parser.add_argument("-v", "--verbose", help="Be verbose", store_action=True)
+    parser.add_argument("-v", "--verbose", help="Be verbose", action="store_true")
 
     args = parser.parse_args()
 
