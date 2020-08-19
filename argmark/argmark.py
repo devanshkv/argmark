@@ -159,7 +159,7 @@ def main():
     )
     parser.add_argument("-v", "--verbose", help="Be verbose", action="store_true")
 
-    args = parser.parse_args()
+    args, _ = parser.parse_known_args()
 
     logging_format = (
         "%(asctime)s - %(funcName)s -%(name)s - %(levelname)s - %(message)s"
