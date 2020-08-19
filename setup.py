@@ -1,7 +1,10 @@
 from setuptools import setup
 
-with open("requirements.txt") as f:
+with open("requirements.txt", "r") as f:
     required = f.read().splitlines()
+
+with open("README.md", "r") as f:
+    long_description = f.read()
 
 setup(
     name="argmark",
@@ -9,6 +12,8 @@ setup(
     packages=["argmark"],
     url="https://github.com/devanshkv/argmark",
     install_requires=required,
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     author="Devansh Agarwal",
     author_email="devansh.kv@gmail.com",
     description="Convert argparse based executable scripts to markdown documents.",

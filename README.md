@@ -4,10 +4,13 @@
 [![GitHub forks](https://img.shields.io/github/forks/devanshkv/argmark?style=flat-square)](https://github.com/devanshkv/argmark/forks)
 [![GitHub stars](https://img.shields.io/github/stars/devanshkv/argmark?style=flat-square)](https://github.com/devanshkv/argmark/stars)
 [![GitHub LICENSE](https://img.shields.io/github/license/devanshkv/argmark?style=flat-square)](https://github.com/devanshkv/argmark/LICENSE)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/argmark?style=flat-square)](https://pypi.org/project/argmark)
+[![PyPI](https://img.shields.io/pypi/v/argmark?style=flat-square)](https://pypi.org/project/argmark)
+
 [![codecov](https://codecov.io/gh/devanshkv/argmark/branch/master/graph/badge.svg?style=flat-square)](https://codecov.io/gh/devanshkv/argmark)
   
 
-Convert argparse based executable scripts to markdown documents. It is based upon [argdown](https://github.com/9999years/argdown) but has a simpler interfaceand a cleaner code.
+Convert argparse based executable scripts to markdown documents. It is based on [argdown](https://github.com/9999years/argdown) but has a simpler interfaceand a cleaner code.
 ### Installation
 ```bash
 pip install argmark
