@@ -6,6 +6,7 @@
 [![GitHub LICENSE](https://img.shields.io/github/license/devanshkv/argmark?style=flat-square)](https://github.com/devanshkv/argmark/LICENSE)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/argmark?style=flat-square)](https://pypi.org/project/argmark)
 [![PyPI](https://img.shields.io/pypi/v/argmark?style=flat-square)](https://pypi.org/project/argmark)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fdevanshkv%2Fargmark.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fdevanshkv%2Fargmark?ref=badge_shield)
 
 [![codecov](https://codecov.io/gh/devanshkv/argmark/branch/master/graph/badge.svg?style=flat-square)](https://codecov.io/gh/devanshkv/argmark)
   
@@ -59,3 +60,7 @@ Run `argmark -f sample_argparse.py` and it would generate:
 
 ```
 
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fdevanshkv%2Fargmark.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fdevanshkv%2Fargmark?ref=badge_large)
