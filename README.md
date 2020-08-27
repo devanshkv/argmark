@@ -6,11 +6,13 @@
 [![GitHub LICENSE](https://img.shields.io/github/license/devanshkv/argmark?style=flat-square)](https://github.com/devanshkv/argmark/LICENSE)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/argmark?style=flat-square)](https://pypi.org/project/argmark)
 [![PyPI](https://img.shields.io/pypi/v/argmark?style=flat-square)](https://pypi.org/project/argmark)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
+
 
 [![codecov](https://codecov.io/gh/devanshkv/argmark/branch/master/graph/badge.svg?style=flat-square)](https://codecov.io/gh/devanshkv/argmark)
   
 
-Convert argparse based executable scripts to markdown documents. It is based on [argdown](https://github.com/9999years/argdown) but has a simpler interfaceand a cleaner code.
+Convert argparse based executable scripts to markdown documents. It is based on [argdown](https://github.com/9999years/argdown) but has a simpler interface and a cleaner code.
 ### Installation
 ```bash
 pip install argmark
@@ -36,26 +38,26 @@ values = parser.parse_args()
 Run `argmark -f sample_argparse.py` and it would generate:
 ```markdown
 
-    sample_argparse.py
-    ==================
-    
-    # Description
-    
-    
-    Just a test
-    # Usage:
-    
-    
-    ```bash
-    usage: sample_argparse.py [-h] -f FILES [FILES ...]
-    
-    ```
-        # Arguments
-    
-    |short|long|default|help|
-    | :---: | :---: | :---: | :---: |
-    |`-h`|`--help`||show this help message and exit|
-    |`-f`|`--files`|`None`|Files to read.|
+sample_argparse.py
+==================
+
+# Description
+
+
+Just a test
+# Usage:
+
+
+```bash
+usage: sample_argparse.py [-h] -f FILES [FILES ...]
+
+```
+    # Arguments
+
+|short|long|default|help|
+| :---: | :---: | :---: | :---: |
+|`-h`|`--help`||show this help message and exit|
+|`-f`|`--files`|`None`|Files to read.|
 
 ```
 
