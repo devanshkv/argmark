@@ -8,6 +8,7 @@
 [![PyPI](https://img.shields.io/pypi/v/argmark?style=flat-square)](https://pypi.org/project/argmark)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
 
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fdevanshkv%2Fargmark.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fdevanshkv%2Fargmark?ref=badge_shield)
 
 [![codecov](https://codecov.io/gh/devanshkv/argmark/branch/master/graph/badge.svg?style=flat-square)](https://codecov.io/gh/devanshkv/argmark)
   
@@ -38,26 +39,30 @@ values = parser.parse_args()
 Run `argmark -f sample_argparse.py` and it would generate:
 ```markdown
 
-sample_argparse.py
-==================
-
-# Description
-
-
-Just a test
-# Usage:
-
-
-```bash
-usage: sample_argparse.py [-h] -f FILES [FILES ...]
+    sample_argparse.py
+    ==================
+    
+    # Description
+    
+    
+    Just a test
+    # Usage:
+    
+    
+    ```bash
+    usage: sample_argparse.py [-h] -f FILES [FILES ...]
+    
+    ```
+        # Arguments
+    
+    |short|long|default|help|
+    | :---: | :---: | :---: | :---: |
+    |`-h`|`--help`||show this help message and exit|
+    |`-f`|`--files`|`None`|Files to read.|
 
 ```
-    # Arguments
 
-|short|long|default|help|
-| :---: | :---: | :---: | :---: |
-|`-h`|`--help`||show this help message and exit|
-|`-f`|`--files`|`None`|Files to read.|
 
-```
 
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fdevanshkv%2Fargmark.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fdevanshkv%2Fargmark?ref=badge_large)
