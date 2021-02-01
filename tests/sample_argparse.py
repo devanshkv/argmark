@@ -6,6 +6,11 @@ parser = argparse.ArgumentParser(
     formatter_class=argparse.ArgumentDefaultsHelpFormatter,
 )
 parser.add_argument(
-    "-f", "--files", help="Files to read.", required=True, nargs="+",
+    "-f",
+    "--files",
+    help="Files to read.",
+    required=True,
+    nargs="+",
 )
+parser.add_argument("-b", "--bar", required=False)
 values = parser.parse_args()

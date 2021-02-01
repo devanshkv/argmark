@@ -73,6 +73,7 @@ def gen_help(lines: List) -> None:
                 indent = get_indent(line)
                 break
     lines = lines[:lastline]
+    lines.append("\n")
     lines.append(" " * indent + "import argmark")
     lines.append(" " * indent + f"argmark.md_help({parser})")
     logging.debug("\n".join(lines))
@@ -142,8 +143,15 @@ def md_help(parser: _argparse.ArgumentParser) -> None:
         i += 1
 
     mdFile.new_header(level=1, title="Arguments")
+    logging.debug(f"Creating Table with text={options}")
+    logging.debug(f"Pre map {options}")
+    options = [inline_code(di) if di is None else di for di in options]
+    logging.debug(f"Post map {options}")
     mdFile.new_table(
-        columns=4, rows=len(options) // 4, text=options, text_align="center",
+        columns=4,
+        rows=len(options) // 4,
+        text=options,
+        text_align="left",
     )
     mdFile.create_md_file()
 
@@ -155,7 +163,11 @@ def main():
         formatter_class=_argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument(
-        "-f", "--files", help="files to convert", required=True, nargs="+",
+        "-f",
+        "--files",
+        help="files to convert",
+        required=True,
+        nargs="+",
     )
     parser.add_argument("-v", "--verbose", help="Be verbose", action="store_true")
 

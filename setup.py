@@ -8,7 +8,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="argmark",
-    version="0.1",
+    version="0.2",
     packages=["argmark"],
     url="https://github.com/devanshkv/argmark",
     install_requires=required,
@@ -17,7 +17,11 @@ setup(
     author="Devansh Agarwal",
     author_email="devansh.kv@gmail.com",
     description="Convert argparse based executable scripts to markdown documents.",
-    entry_points={"console_scripts": ["argmark=argmark.argmark:main", ], },
+    entry_points={
+        "console_scripts": [
+            "argmark=argmark.argmark:main",
+        ],
+    },
     tests_require=["pytest", "pytest-cov"],
     classifiers=[
         "Programming Language :: Python :: 3.6",

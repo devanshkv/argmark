@@ -10,12 +10,13 @@ Just a test
 
 
 ```bash
-usage: sample_argparse.py [-h] -f FILES [FILES ...]
+usage: sample_argparse.py [-h] -f FILES [FILES ...] [-b BAR]
 
 ```
 # Arguments
 
 |short|long|default|help|
-| :---: | :---: | :---: | :---: |
+| :--- | :--- | :--- | :--- |
 |`-h`|`--help`||show this help message and exit|
 |`-f`|`--files`|`None`|Files to read.|
+|`-b`|`--bar`|`None`|`None`|
