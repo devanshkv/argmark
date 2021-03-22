@@ -145,7 +145,9 @@ def md_help(parser: _argparse.ArgumentParser) -> None:
     mdFile.new_header(level=1, title="Arguments")
     logging.debug(f"Creating Table with text={options}")
     logging.debug(f"Pre map {options}")
-    options = [inline_code(di) if di is None else di for di in options]
+    options = [
+        inline_code(di) if di is None else di.replace("\n", " ") for di in options
+    ]
     logging.debug(f"Post map {options}")
     mdFile.new_table(
         columns=4,

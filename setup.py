@@ -8,7 +8,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="argmark",
-    version="0.2",
+    version="0.3",
     packages=["argmark"],
     url="https://github.com/devanshkv/argmark",
     install_requires=required,
