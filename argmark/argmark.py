@@ -26,7 +26,7 @@ def inline_code(code: str) -> str:
 
 def gen_help(lines: List) -> None:
     """
-    Generate the help given the source code as list of lines
+    Generate lines of code containing the argument parser and pass it to md_help.
 
     Args:
 
@@ -45,7 +45,7 @@ def gen_help(lines: List) -> None:
 
     parser_expr = re.compile(r"(\w+)\.parse_args\(")
     for i, line in enumerate(lines):
-        if "ArgumentParser()" in line:
+        if "ArgumentParser(" in line:
             firstline = i
         if ".parse_args(" in line:
             parser = re.search(parser_expr, line)
@@ -65,7 +65,7 @@ def gen_help(lines: List) -> None:
 
 def md_help(parser: _argparse.ArgumentParser) -> None:
     """
-
+    Generate a mardown file from the given argument parser.
     Args:
         parser: parser object
 
