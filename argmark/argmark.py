@@ -3,7 +3,7 @@ import logging
 import os
 import re
 from typing import List
-
+from inspect import cleandoc
 from mdutils.mdutils import MdUtils
 
 
@@ -23,31 +23,6 @@ def inline_code(code: str) -> str:
     return f"`{code}`"
 
 
-def get_indent(line: str) -> int:
-    """
-
-    Get the indent of the file.
-
-    Args:
-
-        line (str) : A string whose indent needs to be found
-
-    Returns:
-
-        int: Indent
-
-    """
-    indent = 0
-    for c in line:
-        if c == " ":
-            indent += 1
-        elif c == "\t":
-            indent += 8
-        else:
-            # break on first word / non-white char
-            break
-    return indent
-
 
 def gen_help(lines: List) -> None:
     """
@@ -62,22 +37,30 @@ def gen_help(lines: List) -> None:
         None
 
     """
-    indent = 0
+    lines_string = ""
+    lines_string += "import argparse"
+    lines_string += "\n"
+    lines_string += "import argmark"
+    lines_string += "\n"
+
     parser_expr = re.compile(r"(\w+)\.parse_args\(")
     for i, line in enumerate(lines):
+        if "ArgumentParser()" in line:
+            firstline = i
         if ".parse_args(" in line:
             parser = re.search(parser_expr, line)
             if parser is not None:
                 lastline = i
                 parser = parser.group(1)
-                indent = get_indent(line)
                 break
-    lines = lines[:lastline]
-    lines.append("\n")
-    lines.append(" " * indent + "import argmark")
-    lines.append(" " * indent + f"argmark.md_help({parser})")
-    logging.debug("\n".join(lines))
-    exec("\n".join(lines), {"__name__": "__main__"})
+
+    lines = lines[firstline:lastline]
+    
+    lines_string += cleandoc("\n".join(lines))
+    lines_string += "\n"
+    lines_string += f"argmark.md_help({parser})"
+    logging.debug(lines_string)
+    exec(lines_string, {"__name__": "__main__"})
 
 
 def md_help(parser: _argparse.ArgumentParser) -> None:
