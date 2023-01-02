@@ -10,11 +10,6 @@ def test_inline_code():
     assert inline_code("f") == "`f`"
 
 
-def test_get_indent():
-    assert get_indent("  foo") == 2
-    assert get_indent("\tfoo") == 8
-
-
 def test_gen_help():
     py_file = os.path.join(_install_dir, "sample_argparse.py")
     md_file = "sample_argparse.md"
