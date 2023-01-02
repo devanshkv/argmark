@@ -80,15 +80,72 @@ def gen_help(lines: List) -> None:
     exec("\n".join(lines), {"__name__": "__main__"})
 
 
+def get_options(parser : _argparse.ArgumentParser, actions_list: List[_argparse.Action]):
+    """
+    Get the options from the actions list
+
+    Args:
+
+        actions_list: actions list
+
+    Returns:
+
+        List: list of options
+
+    """
+    used_actions = []
+    for action in actions_list:
+        option = ["", "", action.help]
+        this_id = id(action)
+        if this_id in used_actions:
+            continue
+        used_actions.append(this_id)
+
+        if not action.option_strings:
+            option[0] = inline_code(action.dest)
+        else:
+            for opt in action.option_strings:
+                option[0] += inline_code(opt) + ", "
+            option[0] = option[0][:-2]    
+
+        if not (
+            isinstance(action.default, bool)
+            or isinstance(action, _argparse._VersionAction)
+            or isinstance(action, _argparse._HelpAction)
+        ):
+            default = (
+                action.default
+                if isinstance(action.default, str)
+                else repr(action.default)
+            )
+            option[1] = inline_code(default)
+        yield option, action.required
+
+
 def md_help(parser: _argparse.ArgumentParser) -> None:
     """
-
+    Generate a mardown file from the given argument parser.
     Args:
         parser: parser object
 
     Returns:
 
     """
+    def add_table_section(name: str, options: List[str]):
+        mdFile.new_header(level=1, title=name)
+        logging.debug(f"Creating Table with text={options}")
+        logging.debug(f"Pre map {options}")
+        options = [
+            inline_code(di) if di is None else di.replace("\n", " ") for di in options
+        ]
+        logging.debug(f"Post map {options}")
+        mdFile.new_table(
+            columns=3,
+            rows=len(options) // 3,
+            text=options,
+            text_align="left",
+        )
+
     if parser.prog is None:
         logging.info("Saving as foo.md")
         mdFile = MdUtils(file_name="foo")
@@ -106,55 +163,24 @@ def md_help(parser: _argparse.ArgumentParser) -> None:
     mdFile.new_header(level=1, title="Usage:")
     mdFile.insert_code(parser.format_usage(), language="bash")
 
-    used_actions = {}
-    options = ["short", "long", "default", "help"]
-    i = 0
-    for k in parser._option_string_actions:
+    positional_options = ["Option", "Default", "Description"]
+    optional_options = ["Option", "Default", "Description"]
+    required_options = ["Option", "Default", "Description"]
+    for option, required in get_options(parser, parser._positionals._group_actions):
+        positional_options.extend(option)
+    for option, required in get_options(parser, parser._optionals._group_actions):
+        if required:
+            required_options.extend(option)
+        else:
+            optional_options.extend(option)
+    
+    if len(positional_options) > 3:
+        add_table_section("Positional Arguments", positional_options)
+    if len(required_options) > 3:
+        add_table_section("Required Arguments", required_options)
+    if len(optional_options) > 3:
+        add_table_section("Optional Arguments", optional_options)
 
-        action = parser._option_string_actions[k]
-        list_of_str = ["", "", "", action.help]
-        this_id = id(action)
-        if this_id in used_actions:
-            continue
-        used_actions[this_id] = True
-
-        for opt in action.option_strings:
-            # --, long option
-            if len(opt) > 1 and opt[1] in parser.prefix_chars:
-                list_of_str[1] = inline_code(opt)
-            # short opt
-            elif len(opt) > 0 and opt[0] in parser.prefix_chars:
-                list_of_str[0] = inline_code(opt)
-
-        if not (
-            isinstance(action.default, bool)
-            or isinstance(action, _argparse._VersionAction)
-            or isinstance(action, _argparse._HelpAction)
-        ):
-            default = (
-                action.default
-                if isinstance(action.default, str)
-                else repr(action.default)
-            )
-            list_of_str[2] = inline_code(default)
-
-        options.extend(list_of_str)
-
-        i += 1
-
-    mdFile.new_header(level=1, title="Arguments")
-    logging.debug(f"Creating Table with text={options}")
-    logging.debug(f"Pre map {options}")
-    options = [
-        inline_code(di) if di is None else di.replace("\n", " ") for di in options
-    ]
-    logging.debug(f"Post map {options}")
-    mdFile.new_table(
-        columns=4,
-        rows=len(options) // 4,
-        text=options,
-        text_align="left",
-    )
     mdFile.create_md_file()
 
 
