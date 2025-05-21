@@ -1,0 +1,20 @@
+version = 1
+revision = 2
+requires-python = ">=3.6"
+
+[[package]]
+name = "argmark"
+version = "0.3"
+source = { editable = "." }
+dependencies = [
+    { name = "mdutils" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "mdutils", specifier = ">=1.2.2" }]
+
+[[package]]
+name = "mdutils"
+version = "1.6.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/b1/ec/6240f147530a2c8d362ed3f2f7985aca92cda68c25ffc2fc216504b17148/mdutils-1.6.0.tar.gz", hash = "sha256:647f3cf00df39fee6c57fa6738dc1160fce1788276b5530c87d43a70cdefdaf1", size = 22881, upload-time = "2023-04-29T14:39:34.994Z" }
