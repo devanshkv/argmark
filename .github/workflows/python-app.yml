@@ -4,40 +4,48 @@ on: [push, pull_request]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.6, 3.7, 3.8]
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12'] # Updated to versions compatible with uv
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+      
+      - name: Install uv
+        run: curl -LsSf https://astral.sh/uv/install.sh | sh
+        shell: bash
+
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-      - name: Install it
+          source $HOME/.cargo/env # Ensure uv is in PATH for subsequent steps
+          uv pip install --system -r requirements.txt
+          uv pip install --system pytest pytest-cov # For running tests
+
+      - name: Install package
         run: |
-          python setup.py install
-      - name: Lint with flake8
+          source $HOME/.cargo/env
+          uv pip install --system .
+
+      - name: Lint with black
         run: |
-          pip install flake8
-          # stop the build if there are Python syntax errors or undefined names
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+          source $HOME/.cargo/env
+          uv run black --check .
+
       - name: Run pytest and Generate coverage report
         run: |
-          pip install pytest pytest-cov
-          python -m pytest --cov=argmark --cov-report=xml
+          source $HOME/.cargo/env
+          uv run pytest --cov=argmark --cov-report=xml
+
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage.xml
-          name: codecov-umbrella
+          name: codecov-umbrella # Optional: can be removed if not specifically needed
           fail_ci_if_error: true
+```

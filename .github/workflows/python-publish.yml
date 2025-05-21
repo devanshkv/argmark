@@ -9,23 +9,33 @@ on:
 
 jobs:
   deploy:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.x'
-    - name: Install dependencies
+        python-version: '3.x' # Use a recent Python 3.x, uv will be installed within it
+
+    - name: Install uv
+      run: curl -LsSf https://astral.sh/uv/install.sh | sh
+      shell: bash
+
+    - name: Install build dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip install setuptools wheel twine
-    - name: Build and publish
+        source $HOME/.cargo/env # Ensure uv is in PATH
+        uv pip install --system build twine
+
+    - name: Build package
+      run: |
+        source $HOME/.cargo/env
+        uv run python -m build --sdist --wheel
+
+    - name: Publish package
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
-        python setup.py sdist bdist_wheel
+        source $HOME/.cargo/env # Not strictly necessary for twine if twine is in system PATH after install
         twine upload dist/*
+```

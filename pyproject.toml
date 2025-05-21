@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=46.4.0.post20200518", "wheel"]
+build-backend = "setuptools.build_meta"
+# backend-path = ["."] # Not typically needed if setup.py is minimal and in root
+
+[project]
+name = "argmark"
+version = "0.3"
+description = "Convert argparse based executable scripts to markdown documents."
+readme = "README.md"
+requires-python = ">=3.6"
+license = { file = "LICENSE" }
+authors = [
+    {name = "Devansh Agarwal", email = "devansh.kv@gmail.com"}
+]
+classifiers = [
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Topic :: Documentation",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+]
+dependencies = [
+    "mdutils>=1.2.2"
+]
+
+[project.urls]
+Homepage = "https://github.com/devanshkv/argmark"
+
+[project.scripts]
+argmark = "argmark.argmark:main"
