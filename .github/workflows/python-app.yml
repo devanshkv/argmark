@@ -46,8 +46,5 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage.xml
-          name: codecov-umbrella # Optional: can be removed if not specifically needed
+          name: codecov-umbrella
           fail_ci_if_error: true
-        env: # Ensure environment variables are available if action needs them
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-```
