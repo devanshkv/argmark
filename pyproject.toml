@@ -31,3 +31,9 @@ Homepage = "https://github.com/devanshkv/argmark"
 
 [project.scripts]
 argmark = "argmark.argmark:main"
+
+[tool.uv]
+managed = true
+
+[tool.uv.sources]
+argmark = { path = ".", editable = true }

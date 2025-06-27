@@ -20,6 +20,10 @@ def _create_md_file_object(parser: _argparse.ArgumentParser) -> MdUtils:
     else:
         file_name_base = os.path.splitext(parser.prog)[0]
         md_file = MdUtils(file_name=file_name_base, title=parser.prog)
+
+    if parser.prog and not parser.prog.endswith(".py") and md_file.title.startswith("\n"):
+        md_file.title = md_file.title.lstrip("\n")
+
     return md_file
 
 def _add_parser_description(md_file: MdUtils, parser: _argparse.ArgumentParser) -> None:
@@ -214,6 +218,11 @@ def md_help(parser: _argparse.ArgumentParser) -> None:
             md_file.new_paragraph("---") 
 
     md_file.create_md_file()
+
+    md_path = md_file.file_name if md_file.file_name.endswith(".md") else md_file.file_name + ".md"
+    with open(md_path, "a", encoding="utf-8") as f:
+        if not open(md_path, "rb").read().endswith(b"\n"):
+            f.write("\n")
 
 def main():
     script_argv = [arg for arg in sys.argv[1:] if arg != '--']

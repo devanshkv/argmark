@@ -37,6 +37,13 @@ values = parser.parse_args()
 ```
 
 Run `argmark -f sample_argparse.py` and it would generate:
+
+Alternatively, with [uv](https://github.com/astral-sh/uv) installed you can run:
+
+```bash
+uvx argmark -f sample_argparse.py
+```
+
 ```markdown
 
     sample_argparse.py
