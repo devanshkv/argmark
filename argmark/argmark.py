@@ -37,7 +37,7 @@ def _add_usage_section(md_file: MdUtils, parser: _argparse.ArgumentParser) -> No
     usage_string = parser.format_usage() if parser.format_usage() is not None else ""
     md_file.insert_code(usage_string, language="bash")
 
-def _format_action_for_table_row(action: _argparse.Action) -> List[str]:
+def _format_action_for_table_row(action: _argparse.Action, parser: _argparse.ArgumentParser) -> List[str]:
     """
     Formats a single argparse.Action into a list of 4 strings for the arguments table.
     Handles both optional and positional arguments based on action.option_strings.
@@ -72,8 +72,11 @@ def _format_action_for_table_row(action: _argparse.Action) -> List[str]:
     # Help text string formatting
     if action.help is None:
         help_text_str = inline_code("None")
+    elif action.help == _argparse.SUPPRESS:
+        help_text_str = ""
     else:
-        help_text_str = str(action.help).replace("\n", " ")
+        formatter = parser._get_formatter()
+        help_text_str = formatter._expand_help(action).replace("\n", " ")
         
     return [short_opt_str, long_opt_str, default_cell_str, help_text_str]
 
@@ -93,7 +96,7 @@ def _build_arguments_table_data(parser: _argparse.ArgumentParser) -> List[str]:
         
         # This pass is primarily for optionals.
         # _format_action_for_table_row handles based on action.option_strings
-        table_rows_data.append(_format_action_for_table_row(action))
+        table_rows_data.append(_format_action_for_table_row(action, parser))
         seen_action_ids.add(id(action))
 
     # Second Pass (Positionals): Iterate through parser._actions
@@ -105,7 +108,7 @@ def _build_arguments_table_data(parser: _argparse.ArgumentParser) -> List[str]:
         
         # If it has no option_strings, it's a positional argument
         if not action.option_strings:
-            table_rows_data.append(_format_action_for_table_row(action))
+            table_rows_data.append(_format_action_for_table_row(action, parser))
             # No need to add to seen_action_ids here as this is the final pass for this action
             
     # Flatten the table_rows_data with the header
