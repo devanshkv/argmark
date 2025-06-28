@@ -18,5 +18,5 @@ usage: sample_argparse.py [-h] -f FILES [FILES ...] [-b BAR]
 |short|long|default|help|
 | :--- | :--- | :--- | :--- |
 |`-h`|`--help`||show this help message and exit|
-|`-f`|`--files`|`None`|Files to read.|
+|`-f`|`--files`|`None`|Files to read. (default: None)|
 |`-b`|`--bar`|`None`|`None`|
